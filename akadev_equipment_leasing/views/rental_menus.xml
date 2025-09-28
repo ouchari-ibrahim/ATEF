@@ -1,0 +1,22 @@
+<odoo>
+    <menuitem id="menu_rental_root"
+              name="Location"
+              sequence="30"
+              web_icon="rental_equipment,static/description/icon.png"/>
+
+    <menuitem id="menu_rental_orders"
+              name="Commandes de Location"
+              parent="menu_rental_root"
+              action="action_rental_order"
+              sequence="10"/>
+
+    <menuitem id="menu_rental_equipment"
+              name="Équipements Louables"
+              parent="menu_rental_root"
+              sequence="20"/>
+
+    <menuitem id="menu_rental_config"
+              name="Configuration"
+              parent="menu_rental_root"
+              sequence="100"/>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_rental_delivery">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <h2>Bon de Sortie - Location</h2>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Client:</strong> <span t-field="o.partner_id.name"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Date:</strong> <span t-field="o.order_date"/>
+                        </div>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Équipement</th>
+                                <th>Date Début</th>
+                                <th>Date Fin Prévue</th>
+                                <th>Prix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.rental_line_ids" t-as="line">
+                                <td><span t-field="line.product_id.name"/></td>
+                                <td><span t-field="line.rental_start_date"/></td>
+                                <td><span t-field="line.rental_end_date"/></td>
+                                <td><span t-field="line.rental_price"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
