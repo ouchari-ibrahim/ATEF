@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================== -->
+    <!-- 1️⃣ TREE (LIST) VIEW -->
+    <!-- ===================== -->
+    <record id="view_rental_order_tree" model="ir.ui.view">
+        <field name="name">rental.order.tree</field>
+        <field name="model">rental.order</field>
+        <field name="arch" type="xml">
+            <list string="Commandes de Location" default_order="id desc">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="order_date"/>
+                <field name="total_amount" widget="monetary"/>
+                <field name="late_lines_count"/>
+                <field name="state" widget="statusbar"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== -->
+    <!-- 2️⃣ FORM VIEW -->
+    <!-- ===================== -->
+    <record id="view_rental_order_form" model="ir.ui.view">
+        <field name="name">rental.order.form</field>
+        <field name="model">rental.order</field>
+        <field name="arch" type="xml">
+            <form string="Commande de Location" create="true" edit="true">
+                <header>
+                    <button name="action_confirm"
+                            string="Confirmer"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state !='draft'"
+                    />
+                    <button name="action_deliver"
+                            string="Livrer"
+                            type="object"
+                            class="btn-success"
+                            invisible="state !='confirmed'"
+
+                    />
+                    <button name="action_return_partial"
+                            string="Retour Partiel"
+                            type="object"
+                            class="btn-warning"
+                            invisible="state !='rented'"
+
+                    />
+                    <button name="action_return_complete"
+                            string="Retour Complet"
+                            type="object"
+                            class="btn-info"
+                            invisible="state not in ['rented','partial_returned']"
+                    />
+                    <button name="action_cancel"
+                            string="Annuler"
+                            type="object"
+                            class="btn-danger"
+                            invisible="state not in ['draft','confirmed']"
+
+                    />
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,confirmed,rented,partial_returned,returned,cancelled"
+                           statusbar_colors="draft:blue;confirmed:green;rented:orange;partial_returned:purple;returned:gray;cancelled:red"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="partner_id" required="1"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="order_date"/>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="total_amount" widget="monetary" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- PAGE: Lignes de Location -->
+                        <page string="Lignes de Location">
+                            <field name="rental_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="rental_start_date"/>
+                                    <field name="rental_end_date"/>
+                                    <field name="rental_price"/>
+                                    <field name="extra_charge"/>
+                                    <field name="returned"/>
+                                    <field name="is_late"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- PAGE: Informations sur le Montant -->
+                        <page string="Montant et Retards">
+                            <group>
+                                <field name="total_amount" readonly="1"/>
+                                <field name="late_lines_count" readonly="1"/>
+                                <field name="has_late_lines" readonly="1"/>
+                            </group>
+                        </page>
+
+                        <!-- PAGE: Notes -->
+                        <page string="Notes">
+                            <field name="notes" nolabel="1" placeholder="Ajouter des notes internes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===================== -->
+    <!-- 3️⃣ SEARCH VIEW -->
+    <!-- ===================== -->
+    <!-- ===================== -->
+    <!-- 3️⃣ SEARCH VIEW -->
+    <!-- ===================== -->
+<!-- ===================== -->
+<!-- 3️⃣ SEARCH VIEW -->
+<!-- ===================== -->
+<record id="view_rental_order_search" model="ir.ui.view">
+    <field name="name">rental.order.search</field>
+    <field name="model">rental.order</field>
+    <field name="arch" type="xml">
+        <search string="Recherche Commandes de Location">
+            <field name="name" string="Numéro"/>
+            <field name="partner_id" string="Client"/>
+            <field name="state" string="État"/>
+            <field name="order_date" string="Date de Commande"/>
+
+            <filter name="draft" string="Brouillon" domain="[('state','=','draft')]"/>
+            <filter name="confirmed" string="Confirmé" domain="[('state','=','confirmed')]"/>
+            <filter name="rented" string="Loué" domain="[('state','=','rented')]"/>
+            <filter name="partial_returned" string="Partiellement Retourné"
+                    domain="[('state','=','partial_returned')]"/>
+            <filter name="returned" string="Retourné" domain="[('state','=','returned')]"/>
+            <filter name="cancelled" string="Annulé" domain="[('state','=','cancelled')]"/>
+
+            <group>
+                <filter name="group_partner" string="Client" domain="" context="{'group_by':'partner_id'}"/>
+                <filter name="group_state" string="État" domain="" context="{'group_by':'state'}"/>
+                <filter name="group_date" string="Date" domain="" context="{'group_by':'order_date'}"/>
+            </group>
+
+            <!-- SEARCH PANEL: Sidebar for quick state filtering -->
+            <searchpanel>
+                <field name="state"
+                       string="État"
+                       icon="fa-tasks"
+                       enable_counters="1"
+                       select="multi"/>
+            </searchpanel>
+        </search>
+    </field>
+</record>
+    <!-- ===================== -->
+    <!-- 4️⃣ ACTION + MENU -->
+    <!-- ===================== -->
+    <record id="action_rental_order" model="ir.actions.act_window">
+        <field name="name">Commandes de Location</field>
+        <field name="res_model">rental.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Gérez vos commandes de location ici.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_rental_root" name="Location"/>
+    <menuitem id="menu_rental_order"
+              name="Commandes de Location"
+              parent="menu_rental_root"
+              action="action_rental_order"/>
+</odoo>

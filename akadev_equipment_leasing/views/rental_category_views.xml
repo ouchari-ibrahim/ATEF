@@ -1,0 +1,43 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_rental_category_tree" model="ir.ui.view">
+        <field name="name">rental.category.tree</field>
+        <field name="model">rental.category</field>
+        <field name="arch" type="xml">
+            <tree string="Catégories d'Équipements">
+                <field name="name"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_rental_category_form" model="ir.ui.view">
+        <field name="name">rental.category.form</field>
+        <field name="model">rental.category</field>
+        <field name="arch" type="xml">
+            <form string="Catégorie d'Équipement">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_rental_category" model="ir.actions.act_window">
+        <field name="name">Catégories d'Équipements</field>
+        <field name="res_model">rental.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_rental_category"
+              name="Catégories"
+              parent="base.menu_custom_rentals"
+              action="action_rental_category"/>
+</odoo>
