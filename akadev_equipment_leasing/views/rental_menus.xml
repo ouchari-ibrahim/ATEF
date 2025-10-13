@@ -19,8 +19,8 @@
 <!--              parent="menu_rental_root"-->
 <!--              sequence="20"/>-->
 
-<!--    <menuitem id="menu_rental_config"-->
-<!--              name="Configuration"-->
-<!--              parent="menu_rental_root"-->
-<!--              sequence="100"/>-->
+    <menuitem id="menu_rental_config"
+              name="Configuration"
+              parent="akadev_equipment_leasing.menu_rental_root"
+              sequence="100"/>
 </odoo>
