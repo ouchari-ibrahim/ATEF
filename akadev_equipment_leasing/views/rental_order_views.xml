@@ -2,10 +2,10 @@
 <odoo>
 
     <!-- ===================== -->
-    <!-- 1️⃣ TREE (LIST) VIEW -->
+    <!-- 1️⃣ list (LIST) VIEW -->
     <!-- ===================== -->
-    <record id="view_rental_order_tree" model="ir.ui.view">
-        <field name="name">rental.order.tree</field>
+    <record id="view_rental_order_list" model="ir.ui.view">
+        <field name="name">rental.order.list</field>
         <field name="model">rental.order</field>
         <field name="arch" type="xml">
             <list string="Commandes de Location" default_order="id desc">
@@ -173,9 +173,8 @@
         </field>
     </record>
 
-    <menuitem id="menu_rental_root" name="Location"/>
     <menuitem id="menu_rental_order"
               name="Commandes de Location"
-              parent="menu_rental_root"
+              parent="akadev_equipment_leasing.menu_rental_root"
               action="action_rental_order"/>
 </odoo>

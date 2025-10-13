@@ -31,6 +31,18 @@ class RentalOrder(models.Model):
         tracking=True
     )
 
+    rental_category_id = fields.Many2one(
+        'rental.order.category',
+        string='Catégorie de Location',
+        help="Catégorie principale de la commande"
+    )
+
+    rental_order_tag_id = fields.Many2one(
+        'rental.order.tag',  # the model for your tags
+        string="Étiquette de Location",
+        help="Étiquette principale de la commande"
+    )
+
     state = fields.Selection([
         ('draft', 'Brouillon'),
         ('confirmed', 'Confirmé'),

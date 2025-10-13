@@ -37,7 +37,7 @@ class ResPartner(models.Model):
             'name': _('Locations'),
             'type': 'ir.actions.act_window',
             'res_model': 'rental.order',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('partner_id', '=', self.id)],
             'context': {'default_partner_id': self.id}
         }

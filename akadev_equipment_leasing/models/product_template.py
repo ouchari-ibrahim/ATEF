@@ -15,12 +15,12 @@ class ProductTemplate(models.Model):
     )
 
     rental_category_id = fields.Many2one(
-        'rental.category',
+        'rental.product.category',
         string='Catégorie Location'
     )
 
     rental_tag_ids = fields.Many2many(
-        'rental.tag',
+        'rental.product.tag',
         string='Étiquettes Location'
     )
 
