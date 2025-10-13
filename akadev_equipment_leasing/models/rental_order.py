@@ -14,13 +14,13 @@ class RentalOrder(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'name'
 
+
     name = fields.Char(
-        string='Numéro',
+        string='Référence',
         required=True,
         copy=False,
         readonly=True,
-        default=lambda self: _('Nouveau'),
-        tracking=True
+        default=lambda self: '/'
     )
 
     partner_id = fields.Many2one(
@@ -102,9 +102,16 @@ class RentalOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('Nouveau')) == _('Nouveau'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('rental.order') or _('Nouveau')
-        return super().create(vals)
+        if isinstance(vals, list):
+            # Multiple records creation
+            for v in vals:
+                if v.get('name', '/') == '/':
+                    v['name'] = self.env['ir.sequence'].next_by_code('rental.order') or '/'
+        else:
+            # Single record creation
+            if vals.get('name', '/') == '/':
+                vals['name'] = self.env['ir.sequence'].next_by_code('rental.order') or '/'
+        return super(RentalOrder, self).create(vals)
 
     @api.depends('rental_line_ids.rental_price', 'rental_line_ids.extra_charge')
     def _compute_total_amount(self):

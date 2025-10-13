@@ -20,7 +20,7 @@ Ce module permet de gérer la location de machines et équipements :
     'website': 'https://www.votresite.com',
     'depends': ['base', 'stock', 'mail','product'],
     'data': [
-        # 'security/rental_security.xml',
+        'data/rental_order_sequence.xml',
         'security/ir.model.access.csv',
         # 'data/rental_sequence.xml',
         # 'data/rental_data.xml',
@@ -33,6 +33,7 @@ Ce module permet de gérer la location de machines et équipements :
         'views/rental_product_tag_views.xml',
         'views/rental_order_product_menu.xml',
         'views/res_partner_views.xml',
+        'views/rental_order_res_partner_views.xml',
         # 'views/res_partner_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',

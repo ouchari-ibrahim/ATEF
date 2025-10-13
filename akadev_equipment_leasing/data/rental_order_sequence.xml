@@ -1,0 +1,10 @@
+<odoo>
+    <record id="seq_rental_order" model="ir.sequence">
+        <field name="name">Location Commande</field>
+        <field name="code">rental.order</field>
+        <field name="prefix">LOC/%(year)s/</field>
+        <field name="padding">3</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
