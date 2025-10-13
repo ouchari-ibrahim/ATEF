@@ -12,19 +12,27 @@ class ResPartner(models.Model):
 
     is_client_location = fields.Boolean(
         string='Client Location',
-        help='Ce partenaire peut louer des équipements'
+        help='Ce partenaire peut louer des équipements',store=True
+    )
+    testing = fields.Boolean(
+        string='Client Location',
+        help='Ce partenaire peut louer des équipements',store=True
     )
 
     is_supplier = fields.Boolean(
         string='Fournisseur',
-        help='Ce partenaire est un fournisseur'
+        help='Ce partenaire est un fournisseur',store=True
     )
 
     rental_count = fields.Integer(
         string='Nombre de Locations',
-        compute='_compute_rental_count'
+        compute='_compute_rental_count',store=True
     )
-
+    rental_config_ids = fields.One2many(
+        'res.partner.rental.config',
+        'partner_id',
+        string='Rental Configurations'
+    )
     def _compute_rental_count(self):
         for partner in self:
             partner.rental_count = self.env['rental.order'].search_count([

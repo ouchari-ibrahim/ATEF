@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_partner_form_inherit_rental_block" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.rental.block</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Add a new styled block after the main name/email/phone div -->
+            <xpath expr="//div[field/@name='phone']" position="after">
+                <div class="d-flex flex-column flex-grow-1 mt-3" invisible="company_type != 'person'">
+                    <h3 class="mb-1">Location &amp; Fournisseur</h3>
+                    <div class="d-flex align-items-center mb-1">
+                        <field name="is_client_location" widget="boolean_button" options="{'terminology': 'check'}"/>
+                        <label for="is_client_location" class="ms-2 mb-0">Client Location</label>
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <field name="is_supplier" widget="boolean_button" options="{'terminology': 'check'}"/>
+                        <label for="is_supplier" class="ms-2 mb-0">Fournisseur</label>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold me-2">Nombre de Locations:</span>
+                        <field name="rental_count" readonly="1"/>
+                    </div>
+                </div>
+            </xpath>
+
+
+             <xpath expr="//notebook" position="inside">
+                <page string="Paramètres de Location" invisible="company_type != 'person'">
+                    <field name="rental_config_ids">
+                        <list editable="bottom">
+                            <field name="rental_location_id"/>
+                            <field name="rental_duration"/>
+                            <field name="late_notification_email"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -32,6 +32,7 @@ Ce module permet de gérer la location de machines et équipements :
         'views/rental_order_tag_views.xml',
         'views/rental_product_tag_views.xml',
         'views/rental_order_product_menu.xml',
+        'views/res_partner_views.xml',
         # 'views/res_partner_views.xml',
         'views/product_product_views.xml',
         'views/product_template_views.xml',

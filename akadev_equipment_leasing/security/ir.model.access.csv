@@ -6,3 +6,6 @@ access_rental_order_tag,rental.tag,model_rental_order_tag,base.group_user,1,1,1,
 
 access_rental_product_category,rental.category,model_rental_product_category,,1,1,1,1
 access_rental_product_tag,rental.tag,model_rental_product_tag,,1,1,1,1
+
+
+access_partner_rental_config_user,access_partner_rental_config_user,model_res_partner_rental_config,,1,1,1,1
