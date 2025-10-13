@@ -30,7 +30,7 @@ class RentalOrder(models.Model):
         domain=[('is_client_location', '=', True)],
         tracking=True
     )
-
+    picking_id = fields.Many2one('stock.picking', string='Bon de livraison')
     rental_category_id = fields.Many2one(
         'rental.order.category',
         string='Catégorie de Location',
@@ -141,16 +141,43 @@ class RentalOrder(models.Model):
 
     def action_deliver(self):
         """Livrer les équipements (Pickup)"""
+        StockPicking = self.env['stock.picking']
+        StockMove = self.env['stock.move']
+
         for order in self:
-            if order.state != 'confirmed':
+            if not order.state != 'draft':
                 raise UserError(_('Seules les commandes confirmées peuvent être livrées.'))
 
-            # Créer les mouvements de stock sortants
-            for line in order.rental_line_ids:
-                line._create_stock_move_out()
+            if order.picking_id:
+                raise UserError(_('Un bon de livraison existe déjà pour cette commande.'))
 
+            picking_type = self.env.ref('stock.picking_type_out', raise_if_not_found=False)
+            if not picking_type:
+                raise UserError(_('Le type de transfert sortant (Livraison) est introuvable.'))
+
+            picking_vals = {
+                'partner_id': order.partner_id.id,
+                'picking_type_id': picking_type.id,
+                'origin': order.name,
+                'rental_id': order.id,  # link picking -> rental
+                'location_id': picking_type.default_location_src_id.id,
+                'location_dest_id': order.partner_id.property_stock_customer.id,
+            }
+            picking = StockPicking.create(picking_vals)
+
+            for line in order.rental_line_ids:
+                StockMove.create({
+                    'product_id': line.product_id.id,
+                    'product_uom_qty': line.quantity,
+                    'product_uom': line.product_id.uom_id.id,
+                    'picking_id': picking.id,
+                    'location_id': picking.location_id.id,
+                    'location_dest_id': picking.location_dest_id.id,
+                })
+
+            order.picking_id = picking.id
             order.state = 'rented'
-            order.message_post(body=_('Équipements livrés au client.'))
+            order.message_post(body=_('Équipements livrés au client. Bon de livraison : %s') % picking.name)
 
     def action_return_partial(self):
         """Retour partiel d'équipements"""

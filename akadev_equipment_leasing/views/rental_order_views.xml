@@ -38,7 +38,7 @@
                             string="Livrer"
                             type="object"
                             class="btn-success"
-                            invisible="state !='confirmed'"
+
 
                     />
                     <button name="action_return_partial"
@@ -91,6 +91,7 @@
                                     <field name="rental_start_date"/>
                                     <field name="rental_end_date"/>
                                     <field name="rental_price"/>
+                                    <field name="quantity"/>
                                     <field name="extra_charge"/>
                                     <field name="returned"/>
                                     <field name="is_late"/>

@@ -10,4 +10,5 @@ from . import rental_order_tag
 from . import rental_order_category
 from . import res_partner
 from . import res_partner_config_settings
+from . import stock_picking
 

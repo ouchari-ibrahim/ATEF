@@ -71,7 +71,7 @@ class RentalOrderLine(models.Model):
         compute='_compute_rental_duration',
         store=True
     )
-
+    quantity = fields.Float(string="Quantité", default=1)
     rental_duration_full = fields.Char(
         string='Durée Complète',
         compute='_compute_rental_duration',
@@ -156,15 +156,6 @@ class RentalOrderLine(models.Model):
                 body=_('Équipement %s retourné.') % line.product_id.name
             )
 
-    def _create_stock_move_out(self):
-        """Créer mouvement de stock sortant (livraison)"""
-        # Logique pour créer les mouvements de stock
-        pass
-
-    def _create_stock_move_in(self):
-        """Créer mouvement de stock entrant (retour)"""
-        # Logique pour créer les mouvements de stock
-        pass
 
     def _send_late_notification(self):
         """Envoyer notification de retard"""
