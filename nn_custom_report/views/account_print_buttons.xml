@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <!-- 5. Inherit Account Move Form -->
+        <record id="nn_custom_account_move_form_inherit" model="ir.ui.view">
+            <field name="name">nn_custom.account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.account_invoice_send_wizard_form"/>
+            <field name="arch" type="xml">
+                <!-- Example: add a custom field in the header -->
+                <xpath expr="//field[@name='send_and_print_action']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

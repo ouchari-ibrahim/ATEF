@@ -1,0 +1,17 @@
+<odoo>
+
+
+    <record id="action_report_purchase_order" model="ir.actions.report">
+        <field name="name">Bon de commande</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nn_custom_report.report_purchaseorder_document_custom</field>
+        <field name="report_name">nn_custom_report.report_purchaseorder_document_custom</field>
+        <field name="print_report_name">
+            (object.state in ('draft', 'sent') and 'Request for Quotation - %s' % (object.name) or
+            'Bon de commande d\'achat - %s' % (object.name))
+        </field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

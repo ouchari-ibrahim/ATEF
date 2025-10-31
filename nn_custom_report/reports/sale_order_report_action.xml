@@ -1,0 +1,22 @@
+<odoo>
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+
+
+        </record>
+
+        <record id="sale.action_report_pro_forma_invoice" model="ir.actions.report">
+
+        </record>
+    <record id="action_report_saleorder" model="ir.actions.report">
+        <field name="name">Devis/Bon de commande</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nn_custom_report.report_saleorder_document_custom</field>
+        <field name="report_file">nn_custom_report.report_saleorder_document_custom</field>
+        <field name="print_report_name">'Bon de commande - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+
+    </record>
+
+</odoo>

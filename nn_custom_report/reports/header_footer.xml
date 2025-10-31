@@ -1,0 +1,160 @@
+<odoo>
+
+    <template id="external_layout_standard">
+        <!-- Safely set company variable -->
+        <t t-if="not company">
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-elif="doc and 'company_id' in doc">
+                <t t-set="company" t-value="doc.company_id.sudo()"/>
+            </t>
+            <t t-else="">
+                <t t-set="company" t-value="res_company or env.company"/>
+            </t>
+        </t>
+
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style"
+             style="padding-bottom: 11mm;">
+
+            <div class="row">
+                <!-- Logo left -->
+                <div class="col-5" style="margin-left:33mm;">
+                    <img t-att-src="image_data_uri(company.logo)" style="max-height: 99px;"
+                         alt="Logo"/>
+                </div>
+
+                <style>
+                    @font-face {
+                    font-family: 'AlgerianMesa';
+                    src: url('/nn_custom_report/static/fonts/algerian-mesa.ttf') format('truetype');
+                    font-weight: normal;
+                    font-style: normal;
+                    }
+                    .algerian-font {
+                    font-family: 'AlgerianMesa', serif;
+                    }
+                </style>
+
+                <div class="col-5"
+                     style="border: 2px solid black; margin-right: 33mm; height: 21mm; display: flex; align-items: center; justify-content: center;">
+                    <h4 class="algerian-font"
+                        style="font-weight: bold; color: #003366;margin-top:6.6mm; text-align:center;">
+
+                        <!-- Standard Sales Order -->
+                        <t t-if="o and o._name == 'sale.order'">
+                            <t t-if="o.state == 'draft'">Devis</t>
+                            <t t-else="">Bon de commande de vente</t>
+                        </t>
+
+                        <!-- Standard Purchase Order -->
+                        <t t-elif="o and o._name == 'purchase.order'">
+                            <t t-if="o.state == 'draft'">Demande de prix</t>
+                            <t t-else="">Bon de commande d'achat</t>
+                        </t>
+
+                        <!-- Account Move -->
+                        <t t-elif="o and o._name == 'account.move'">
+                            Facture
+                        </t>
+
+                        <!-- Default Case -->
+                        <t t-else="">
+                            Document
+                        </t>
+
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+
+        <main class="page">
+            <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout"
+                 t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <div class="pt-5">
+                    <!-- Avoid overlap with header -->
+                </div>
+                <t t-raw="0"/>
+            </div>
+        </main>
+
+
+        <t t-if="report_type == 'pdf'">
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout"
+                 style="padding-top: 11mm; font-size: 11px; width: 100%;">
+
+                <!-- Horizontal Line -->
+                <hr style="border-top: 1px solid #000000; margin: 0 auto;width:100%;"/>
+
+                <!-- Footer Content -->
+                <div class="row" style="align-items: flex-start;">
+
+                    <!-- Company Info -->
+                    <div class="col-8 text-center" style="margin-top:3.3mm;">
+
+                        <div style="margin-bottom: 4.4px;">
+                            <strong>Siège Social :</strong>
+                            <span t-field="company.street"/>
+                        </div>
+
+                        <div>
+                            <strong>Tél :</strong>
+                            <span style="padding-right:4.4mm;" t-field="company.phone"/>
+
+                            <strong>E-mail :</strong>
+                            <span style="padding-right:4.4mm;" t-field="company.email"/>
+
+                            <strong>Site Web :</strong>
+                            <span t-field="company.website"/>
+                        </div>
+
+                        <div style="margin-top: 4.4px;">
+                            <strong>M.F. :</strong>
+                            <span style="padding-right:5.5mm;" t-field="company.vat"/>
+
+                            <strong>RNE :</strong>
+                            <span t-field="company.company_registry"/>
+                        </div>
+                    </div>
+
+                    <!-- Logo -->
+
+
+                </div>
+
+                <!-- Page Number -->
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center" style="font-size: 9.9px; margin-top: 11px;">
+                        Page
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+    </template>
+
+    <!-- Public api: layout to t-call from reports -->
+    <template id="external_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id"/>
+            </t>
+            <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                <t t-set="company" t-value="o.company_id.sudo()"/>
+            </t>
+            <t t-else="">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+        </t>
+        <t t-call="nn_custom_report.external_layout_standard">
+            <t t-raw="0"/>
+        </t>
+    </template>
+</odoo>

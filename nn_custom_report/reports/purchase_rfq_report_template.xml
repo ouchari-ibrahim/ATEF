@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_rfq_template_custom">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="nn_custom_report.external_layout">
+                <t t-set="o" t-value="doc"/>
+
+                <!-- Header Title -->
+                <div style="text-align:center; margin-top:-10mm;">
+                    <h2 style="color:#003366; font-weight:bold;">DEMANDE DE PRIX</h2>
+                    <h4 style="color:#666;">Référence:
+                        <span t-field="doc.name"/>
+                    </h4>
+                </div>
+
+                <!-- Supplier Info -->
+                <div style="margin-top:10mm; border:2px solid black; padding:10px; width:90%; margin-left:auto; margin-right:auto;">
+                    <p>
+                        <strong>Fournisseur :</strong>
+                        <span t-field="doc.partner_id.name"/>
+                    </p>
+                    <p>
+                        <strong>Adresse :</strong>
+                        <span t-field="doc.partner_id.street"/>
+                        -
+                        <span t-field="doc.partner_id.city"/>
+                        -
+                        <span t-field="doc.partner_id.zip"/>
+                        -
+                        <span t-field="doc.partner_id.country_id.name"/>
+                    </p>
+                    <p t-if="doc.partner_id.vat">
+                        <strong>Matricule Fiscale :</strong>
+                        <span t-field="doc.partner_id.vat"/>
+                    </p>
+                </div>
+
+                <!-- Info Rows -->
+                <div class="row" style="margin-top:10mm;">
+                    <div class="col-4">
+                        <strong>Date :</strong>
+                        <span t-field="doc.date_rfq" t-options='{"widget": "date"}'/>
+                    </div>
+                    <div class="col-4">
+                        <strong>Date de Livraison Souhaitée :</strong>
+                        <span t-field="doc.date_planned"/>
+                    </div>
+                    <div class="col-4">
+                        <strong>Responsable Achat :</strong>
+                        <span t-field="doc.user_id.name"/>
+                    </div>
+                </div>
+
+                <!-- RFQ Lines Table -->
+                <table class="table table-sm"
+                       style="margin-top:10mm; border:2px solid black; border-collapse:collapse; width:100%;">
+                    <thead style="background-color:#f8f9fa; color:#003366; text-align:center;">
+                        <tr>
+                            <th style="border:2px solid black;">DESCRIPTION</th>
+                            <th style="border:2px solid black;">QUANTITÉ</th>
+                            <th style="border:2px solid black;">UNITÉ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.rfq_line" t-as="line">
+                            <tr>
+                                <td style="border:2px solid black;">
+                                    <span t-field="line.name"/>
+                                </td>
+                                <td class="text-center" style="border:2px solid black;">
+                                    <span t-field="line.product_qty"/>
+                                </td>
+                                <td class="text-center" style="border:2px solid black;">
+                                    <span t-field="line.product_uom.name"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Signature Section -->
+                <div style="margin-top:20mm; text-align:right; margin-right:10mm;">
+                    <strong>
+                        <u>
+                            <i>Cachet et Signature</i>
+                        </u>
+                    </strong>
+                </div>
+
+                <!-- Notes -->
+                <div class="mt16" style="margin-top:10mm;">
+                    <p t-field="doc.notes"/>
+                </div>
+
+            </t>
+        </t>
+    </template>
+</odoo>

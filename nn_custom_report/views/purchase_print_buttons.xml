@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+
+
+>
+
+        <!-- 4. Inherit Purchase Order Form -->
+        <record id="nn_custom_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">nn_custom.purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Example: add a field in the header -->
+                <xpath expr="//button[@name='print_report']" position="attributes">
+
+                    <attribute name="invisible">1</attribute>
+
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
