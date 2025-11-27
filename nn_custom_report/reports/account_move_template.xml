@@ -347,7 +347,7 @@
                             <span t-field="o.num_word"/>
                         </div>
                     </div>
-                        <div style="border: 1px solid black; padding: 15px;">
+                        <div style="padding: 15px;">
                             <!-- Payment Terms -->
                             <div t-if="o.invoice_payment_term_id" style="margin-bottom: 10px;">
                                 <strong>Condition de paiement :</strong><br/>
@@ -377,32 +377,32 @@
 
                             <!-- Payment Reference -->
                             <div t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" style="margin-bottom: 10px;">
-                                <strong>Référence de paiement :</strong><br/>
-                                <span class="fw-bold" t-field="o.payment_reference"/>
+<!--                                <strong>Référence de paiement :</strong><br/>-->
+<!--                                <span class="fw-bold" t-field="o.payment_reference"/>-->
                             </div>
 
                             <!-- Bank Account -->
                             <div t-if="o.partner_bank_id">
-                                <strong>Paiement sur ce compte :</strong><br/>
-                                <span t-field="o.partner_bank_id"/>
+<!--                                <strong>Paiement sur ce compte :</strong><br/>-->
+<!--                                <span t-field="o.partner_bank_id"/>-->
                             </div>
 
                             <!-- Additional bank info if available -->
                             <div t-if="o.company_id.partner_id.bank_ids and not o.partner_bank_id">
-                                <t t-set="bank" t-value="o.company_id.partner_id.bank_ids[0]"/>
-                                <div><strong>Paiement :</strong> Par virement bancaire</div>
-                                <div t-if="bank.bank_id">
-                                    <strong>Banque :</strong>
-                                    <span t-field="bank.bank_id.name"/>
-                                </div>
-                                <div t-if="bank.acc_number">
-                                    <strong>IBAN :</strong>
-                                    <span t-field="bank.acc_number"/>
-                                </div>
-                                <div t-if="bank.bank_id.bic">
-                                    <strong>SWIFT :</strong>
-                                    <span t-field="bank.bank_id.bic"/>
-                                </div>
+<!--                                <t t-set="bank" t-value="o.company_id.partner_id.bank_ids[0]"/>-->
+<!--                                <div><strong>Paiement :</strong> Par virement bancaire</div>-->
+<!--                                <div t-if="bank.bank_id">-->
+<!--                                    <strong>Banque :</strong>-->
+<!--                                    <span t-field="bank.bank_id.name"/>-->
+<!--                                </div>-->
+<!--                                <div t-if="bank.acc_number">-->
+<!--                                    <strong>IBAN :</strong>-->
+<!--                                    <span t-field="bank.acc_number"/>-->
+<!--                                </div>-->
+<!--                                <div t-if="bank.bank_id.bic">-->
+<!--                                    <strong>SWIFT :</strong>-->
+<!--                                    <span t-field="bank.bank_id.bic"/>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
