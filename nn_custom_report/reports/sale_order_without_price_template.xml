@@ -111,7 +111,7 @@
         <field name="report_name">nn_custom_report.report_saleorder_document_custom_noprice</field>
         <field name="report_file">nn_custom_report.report_saleorder_document_custom_noprice</field>
         <field name="print_report_name">'BC_Client_Sans_Prix_' + object.name</field>
-                 <field name="binding_model_id" ref="sale.model_saleà_order"/>
+                 <field name="binding_model_id" ref="sale.model_sale_order"/>
             <field name="binding_type">report</field>
     </record>
 </odoo>

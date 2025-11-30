@@ -29,7 +29,6 @@ It matches the client's PDF template with a tailored header, footer, and field l
         "reports/sale_order_without_price_template.xml",
         "reports/purchase_order_report_action_replace.xml",
         "reports/purchase_order_without_price_template.xml",
-        "reports/account_move_action_report_replace.xml",
 
         # Views: Print report button for each model
         # "views/sale_print_buttons.xml",
